@@ -1,0 +1,121 @@
+@font-face {
+  font-family: "MyDiwani";
+  src: url("diwani.ttf") format("truetype");
+}
+
+body {
+  margin: 0;
+  font-family: Tahoma, sans-serif;
+  color: #f5f5f5;
+  text-align: center;
+  overflow: hidden;
+  background: #111;
+  overflow-y: auto;
+}
+
+#bubble-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #111, #1c1c1c, #2a2a2a);
+  background-size: 400% 400%;
+  animation: gradientMove 25s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {background-position:0% 50%}
+  50% {background-position:100% 50%}
+  100% {background-position:0% 50%}
+}
+
+header {
+  padding: 50px 20px 20px;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+/* العنب المتحرك */
+.grape {
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+  margin-left: 10px;
+  font-size: 36px;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+.desc {
+  color: #bbb;
+  max-width: 600px;
+  margin: auto;
+}
+
+.sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 25px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.site-name {
+  font-family: "MyDiwani", serif;
+  font-size: 64px;
+  background: linear-gradient(90deg, #ffffff, #cfcfcf, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(255,255,255,0.2);
+}
+
+
+.sec {
+  background: #222;
+  padding: 22px;
+  border-radius: 10px;
+  border: 2px solid #555;
+  color: white;
+  text-decoration: none;
+  transition: .2s;
+}
+
+.sec:active {
+  transform: scale(.95);
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 30px 0;
+}
+
+.btn {
+  padding: 12px 18px;
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+
+.btn {
+  padding: 12px 18px;
+  border-radius: 6px;
+  color: white;
+}
+
+.insta {background:#E1306C}
+.telegram {background:#0088cc}
+.github {background:#333}
