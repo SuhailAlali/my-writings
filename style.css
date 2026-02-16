@@ -115,7 +115,12 @@ h1 {
   border-radius: 6px;
   color: white;
 }
-
+@media (max-width: 768px) {
+  .container {
+    transform: scale(1.1);
+    transform-origin: top center;
+  }
+}
 .insta {background:#E1306C}
 .telegram {background:#0088cc}
 .github {background:#333}
