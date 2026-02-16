@@ -4,60 +4,67 @@ fetch("novels.json")
     const container = document.getElementById("novels-container");
     
     data.forEach(novel => {
-      const box = document.createElement("div");
-      box.className = "sec";
-      box.style.cursor = "pointer";
+      let state = "cover"; // cover | info | soon
       
-      let showingInfo = false;
-      let showingSoon = false;
+      const card = document.createElement("div");
+      card.className = "sec";
+      card.style.cursor = "pointer";
       
-      const frontView = `
-        <img src="${novel["casing-path"]}" style="width:100%;border-radius:8px;margin-bottom:10px;">
-        <h3 style="font-family: MyFonty; font-size:25px;">${novel.name}</h3>
-      `;
+      function renderCover() {
+        card.innerHTML = `
+          <img src="${novel["casing-path"]}" style="width:100%;border-radius:8px;margin-bottom:10px;">
+          <h3 style="font-family: MyFonty; font-size:25px;">${novel.name}</h3>
+        `;
+        state = "cover";
+      }
       
-      const infoView = `
-        <h3 style="font-family: MyFonty; font-size:26px;">${novel.name}</h3>
-        <p style="color:#aaa;font-size:13px;">${novel.data}</p>
-        <p style="color:#ddd;font-size:14px;">${novel.description}</p>
-        <p style="color:#bbb;font-size:13px;"> ${novel.category}</p>
-      `;
+      function renderInfo() {
+        card.innerHTML = `
+          <h3 style="font-family: MyFonty; font-size:25px;">${novel.name}</h3>
+          <p style="color:#ccc;font-size:14px;">${novel.description}</p>
+          <p style="color:#888;font-size:12px;">التصنيف: ${novel.category}</p>
+          <p style="margin-top:10px;color:#aaa;font-size:12px;">اضغط مرة أخرى لفتح الرواية</p>
+        `;
+        state = "info";
+      }
       
-      const soonView = `
-        <h3 style="font-family: MyFonty; font-size:28px;">${novel.name}</h3>
-        <p style="color:#f5caca;font-size:16px;">قريباً...</p>
-      `;
+      function renderSoon() {
+        card.innerHTML = `
+          <h3 style="font-family: MyFonty; font-size:25px;">${novel.name}</h3>
+          <p style="color:#aaa;">قريباً...</p>
+          <p style="font-size:12px;color:#777;">اضغط للعودة</p>
+        `;
+        state = "soon";
+      }
       
-      box.innerHTML = frontView;
-      
-      // نقرة واحدة
-      box.addEventListener("click", () => {
-        if (showingSoon) {
-          box.innerHTML = frontView;
-          showingSoon = false;
-          showingInfo = false;
-          return;
+      card.onclick = () => {
+        if (state === "cover") {
+          renderInfo();
+        } else if (state === "info") {
+          if (novel["pdf-path"]) {
+            // تحقق من وجود الملف قبل الفتح
+            fetch(novel["pdf-path"], { method: 'HEAD' })
+              .then(resp => {
+                if (resp.ok) {
+                  // الملف موجود، افتحه في نفس الصفحة
+                  window.open(novel["pdf-path"], "_self");
+                } else {
+                  // الملف غير موجود، عرض "قريباً"
+                  renderSoon();
+                }
+              })
+              .catch(() => {
+                renderSoon();
+              });
+          } else {
+            renderSoon();
+          }
+        } else if (state === "soon") {
+          renderCover();
         }
-        
-        if (!showingInfo) {
-          box.innerHTML = infoView;
-          showingInfo = true;
-        } else {
-          box.innerHTML = frontView;
-          showingInfo = false;
-        }
-      });
+      };
       
-      // نقرتين
-      box.addEventListener("dblclick", () => {
-        if (novel["pdf-path"]) {
-          window.open(novel["pdf-path"], "_blank");
-        } else {
-          box.innerHTML = soonView;
-          showingSoon = true;
-        }
-      });
-      
-      container.appendChild(box);
+      renderCover();
+      container.appendChild(card);
     });
   });
