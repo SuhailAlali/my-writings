@@ -2,7 +2,10 @@
   font-family: "MyDiwani";
   src: url("diwani.ttf") format("truetype");
 }
-
+@font-face {
+  font-family: "MyFonty";
+  src: url("fonty.ttf") format("truetype");
+}
 body {
   margin: 0;
   font-family: Tahoma, sans-serif;
@@ -75,7 +78,6 @@ h1 {
   text-shadow: 0 0 20px rgba(255,255,255,0.2);
 }
 
-
 .sec {
   background: #222;
   padding: 22px;
@@ -114,12 +116,6 @@ h1 {
   padding: 12px 18px;
   border-radius: 6px;
   color: white;
-}
-@media (max-width: 768px) {
-  .container {
-    transform: scale(1.1);
-    transform-origin: top center;
-  }
 }
 .insta {background:#E1306C}
 .telegram {background:#0088cc}
